@@ -2,9 +2,17 @@ from api.models import Product
 from rest_framework.viewsets import ModelViewSet,ReadOnlyModelViewSet
 from rest_framework.response import Response
 from rest_framework import status
-from api.api.serializers import ProductSerializer1, ProductSerializer2
+from api.api.serializers import ProductSerializer1, ProductSerializer2, UserSerializer
+from django.contrib.auth.models import User
 from rest_framework.decorators import action
 
+
+class UserViewSet(ReadOnlyModelViewSet):
+    
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+    
+    
 class ProductViewSet(ModelViewSet):
     
     serializer_class = ProductSerializer1
