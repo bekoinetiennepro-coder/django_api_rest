@@ -41,6 +41,26 @@ INSTALLED_APPS = [
     "api",
 ]
 
+REST_FRAMEWORK = {
+    
+    'DEFAULT_PARSER_CLASSES': [
+        'rest_framework.parsers.JSONParser',
+        'rest_framework.parsers.FormParser',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    
+    # 'DEFAULT_PERMISSION_CLASSES': [ 
+    #     'rest_framework.permissions.AllowAny',
+    #     'rest_framework.permissions.IsAuthenticated',
+    # ],
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework.authentication.SessionAuthentication',
+    #     'rest_framework.authentication.BasicAuthentication',
+    # ]
+    
+}
+
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
