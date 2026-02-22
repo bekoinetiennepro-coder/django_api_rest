@@ -11,23 +11,26 @@ from api.api.serializers import ProductSerializer1, ProductSerializer2
 def product_api_view(request, pk=None, *args, **kwargs):
     
     pk = pk
-    
+    context = {
+        "request": request, 
+       
+    }
     if request.method == 'GET':
         if pk is not None:
             try:
                 product = Product.objects.get(pk=pk)
-                serializer = ProductSerializer1(product)
+                serializer = ProductSerializer1(product, context=context)
                 return Response(serializer.data, status=status.HTTP_200_OK)
             except Product.DoesNotExist:
                 return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
         
         products = Product.objects.all()
-        serializer = ProductSerializer1(products, many=True)
+        serializer = ProductSerializer1(products, many=True, context=context)
         return Response(serializer.data, status=status.HTTP_200_OK)
     
     
     if request.method == 'POST':
-        serializer = ProductSerializer1(data=request.data)
+        serializer = ProductSerializer1(data=request.data, context=context)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -42,7 +45,7 @@ def product_api_view(request, pk=None, *args, **kwargs):
             except Product.DoesNotExist:
                 return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
             
-            serializer = ProductSerializer1(product, data=request.data)
+            serializer = ProductSerializer1(product, data=request.data, context=context)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
@@ -69,7 +72,7 @@ def product_api_view(request, pk=None, *args, **kwargs):
             except Product.DoesNotExist:
                 return Response({"error": "Product not found"}, status=status.HTTP_404_NOT_FOUND)
             
-            serializer = ProductSerializer1(product, data=request.data, partial=True)
+            serializer = ProductSerializer1(product, data=request.data, partial=True, context=context)
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
