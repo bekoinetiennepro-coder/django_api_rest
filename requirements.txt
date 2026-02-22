@@ -1,0 +1,4 @@
+django
+django-rest-framework # For building RESTful APIs with Django
+requests # For making HTTP requests to external APIs
+django-cors-headers
